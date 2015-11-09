@@ -98,5 +98,13 @@ public class Board implements Serializable{
 	public void setComments(List<Comment> comments) {
 		this.comments = comments;
 	}
+
+	public Board updateBoard(Board board){
+
+		this.setTitle(board.getTitle());
+		this.setContent(board.getContent());
+
+		return this;
+	}
 	
 }
