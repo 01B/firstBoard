@@ -15,11 +15,7 @@ public interface BoardService {
 
     Page<Board> findBoard(Pageable pageable);
 
-    Page<Board> findBoard(Pageable pageable, String username);
-
     Board updateBoard(Board board);
-
-    boolean deleteBoard(String username);
 
     boolean deleteBoard(Long boardId);
 }
