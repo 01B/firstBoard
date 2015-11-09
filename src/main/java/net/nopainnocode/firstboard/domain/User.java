@@ -10,9 +10,10 @@ import java.util.Date;
 public class User implements Serializable
 {
 
+
 	@Id @GeneratedValue(strategy = GenerationType.AUTO)
 	private Long userId;
-	
+
 	@Column(unique = true, nullable = false)
 	private String username;
 	
@@ -32,13 +33,13 @@ public class User implements Serializable
 	private Date joinDate;
 
 
-	public User(String username, String password, String firstName, String lastName, String nickName) {
+	public User(String username, String password, String firstName, String lastName, String nickname) {
 		
 		setUsername(username);
         setPassword(password);
         setFirstName(firstName);
         setLastName(lastName);
-        setNickName(nickName);
+        setNickName(nickname);
 		setJoinDate(new Date());
 	}
 	
@@ -101,30 +102,26 @@ public class User implements Serializable
 	public void setJoinDate(Date joinDate) {
 		this.joinDate = joinDate;
 	}
-	
-	@Transient
-	public String getFullName(){
-		return getLastName() + " " + getFirstName();
-	}
-	
-	@Transient
-	public User updateUser(User modifiedUser){
 
-		if(isUserEmpty(modifiedUser)) {
+	@Transient
+	public User updateUser(User enteredUser){
 
-			this.setFirstName(modifiedUser.getFirstName());
-			this.setLastName(modifiedUser.getLastName());
-			this.setNickName(modifiedUser.getNickname());
+		if(isUserEmpty(enteredUser)) {
+
+			this.setPassword(enteredUser.getPassword());
+			this.setFirstName(enteredUser.getFirstName());
+			this.setLastName(enteredUser.getLastName());
+			this.setNickName(enteredUser.getNickname());
 		}
 
 		return this;
 	}
 
-	private boolean isUserEmpty(User modifiedUser) {
+	private boolean isUserEmpty(User enteredUser) {
 
-		if(StringUtils.isEmpty(modifiedUser.getFirstName())
-				||StringUtils.isEmpty(modifiedUser.getLastName())
-				||StringUtils.isEmpty(modifiedUser.getNickname()))
+		if(StringUtils.isEmpty(enteredUser.getFirstName())
+				||StringUtils.isEmpty(enteredUser.getLastName())
+				||StringUtils.isEmpty(enteredUser.getNickname()))
 			throw new IllegalArgumentException("argument id null");
 
 		return true;

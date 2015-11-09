@@ -56,9 +56,9 @@ public class UserBuilder implements Builder<User>{
         return new UserBuilder()
                 .setUsername("defaultUsername")
                 .setPassword("defaultPassword")
-                .setNickname("defaultNickname")
                 .setFirstName("defaultFirstName")
                 .setLastName("defaultLastName")
+                .setNickname("defaultNickname")
                 .build();
     }
 }

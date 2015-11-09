@@ -19,7 +19,7 @@ import net.nopainnocode.firstboard.service.UserService;
 
 
 @RestController
-@RequestMapping(value = "/user")
+@RequestMapping(value = "/users")
 public class UserController {
 	
 	@Autowired private UserService userService;
