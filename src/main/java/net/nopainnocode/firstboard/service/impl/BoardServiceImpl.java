@@ -1,7 +1,10 @@
 package net.nopainnocode.firstboard.service.impl;
 
 import net.nopainnocode.firstboard.domain.Board;
+import net.nopainnocode.firstboard.repository.BoardRepository;
 import net.nopainnocode.firstboard.service.BoardService;
+import net.nopainnocode.firstboard.support.error.BoardNotFoundException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -13,38 +16,52 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 public class BoardServiceImpl implements BoardService {
+
+    @Autowired private BoardRepository boardRepository;
+
     @Override
-    public Board addNewBoard(Board board) {
-        return null;
+    public Board addNewBoard(Board newBoard) {
+
+        return boardRepository.save(newBoard);
     }
 
     @Override
     public Board findBoard(Long boardId) {
-        return null;
+
+        return findBoardIfExist(boardId);
     }
+
 
     @Override
     public Page<Board> findBoard(Pageable pageable) {
-        return null;
+
+        return boardRepository.findAll(pageable);
     }
 
     @Override
-    public Page<Board> findBoard(Pageable pageable, String username) {
-        return null;
-    }
+    public Board updateBoard(Board enteredBoard) {
 
-    @Override
-    public Board updateBoard(Board board) {
-        return null;
-    }
-
-    @Override
-    public boolean deleteBoard(String username) {
-        return false;
+        return findBoardIfExist(enteredBoard.getBoardId()).updateBoard(enteredBoard);
     }
 
     @Override
     public boolean deleteBoard(Long boardId) {
-        return false;
+
+        if(null == findBoardIfExist(boardId))
+            return false;
+        else{
+            boardRepository.delete(boardId);
+
+            return true;
+        }
+    }
+
+    private Board findBoardIfExist(Long boardId) {
+        Board board = boardRepository.findOne(boardId);
+
+        if(null == board)
+            throw new BoardNotFoundException(boardId);
+
+        return board;
     }
 }
