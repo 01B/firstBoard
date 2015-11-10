@@ -1,7 +1,9 @@
 package net.nopainnocode.firstboard.service.impl;
 
 import net.nopainnocode.firstboard.domain.Board;
+import net.nopainnocode.firstboard.domain.User;
 import net.nopainnocode.firstboard.repository.BoardRepository;
+import net.nopainnocode.firstboard.repository.UserRepository;
 import net.nopainnocode.firstboard.service.BoardService;
 import net.nopainnocode.firstboard.support.error.BoardNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,10 +20,13 @@ import org.springframework.transaction.annotation.Transactional;
 public class BoardServiceImpl implements BoardService {
 
     @Autowired private BoardRepository boardRepository;
+    @Autowired private UserRepository userRepository;
 
     @Override
     public Board addNewBoard(Board newBoard) {
 
+        User user = userRepository.findOne(newBoard.getUser().getUserId());
+        newBoard.setUser(user);
         return boardRepository.save(newBoard);
     }
 
