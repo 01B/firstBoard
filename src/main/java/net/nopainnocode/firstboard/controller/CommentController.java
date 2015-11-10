@@ -16,7 +16,7 @@ import javax.validation.Valid;
  */
 
 @RestController
-@RequestMapping(value = "/comment")
+@RequestMapping(value = "/comments")
 public class CommentController {
 
     @Autowired private CommentService commentService;
@@ -31,7 +31,7 @@ public class CommentController {
     @RequestMapping(value = "/{boardId}/comments", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> addNewComment(@PathVariable("boardId") Long boardId,
                                            @RequestBody @Valid Comment enteredComment,
-                                           BindingResult bindingResult){
+                                           BindingResult bindingResult) {
 
         if(bindingResult.hasErrors())
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(bindingResult.getAllErrors());

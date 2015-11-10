@@ -18,7 +18,7 @@ import javax.validation.Valid;
  */
 
 @RestController
-@RequestMapping(value = "/board")
+@RequestMapping(value = "/boards")
 public class BoardController {
     
     @Autowired private BoardService boardService;
