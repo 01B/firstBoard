@@ -30,7 +30,7 @@ public class User implements Serializable
 	private String nickname;
 	
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date joinDate;
+	private Date joinDate = new Date();
 
 
 	public User(String username, String password, String firstName, String lastName, String nickname) {
@@ -40,7 +40,6 @@ public class User implements Serializable
         setFirstName(firstName);
         setLastName(lastName);
         setNickName(nickname);
-		setJoinDate(new Date());
 	}
 	
 	public User(){
