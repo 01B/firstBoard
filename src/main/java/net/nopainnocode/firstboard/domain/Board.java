@@ -2,6 +2,7 @@ package net.nopainnocode.firstboard.domain;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.util.StringUtils;
 
 import java.beans.Transient;
@@ -29,8 +30,9 @@ public class Board implements Serializable{
 
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createDate = new Date();
-	
+
 	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, optional = false)
+	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 	private User user;
 
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
