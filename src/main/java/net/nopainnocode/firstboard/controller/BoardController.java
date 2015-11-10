@@ -4,6 +4,7 @@ import net.nopainnocode.firstboard.domain.Board;
 import net.nopainnocode.firstboard.domain.Comment;
 import net.nopainnocode.firstboard.service.BoardService;
 import net.nopainnocode.firstboard.service.CommentService;
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -42,10 +43,10 @@ public class BoardController {
      * @return
      */
     @RequestMapping(value = "/{boardId}", method = RequestMethod.GET)
-    public ResponseEntity<?> findBoard(@PathVariable("boardId") Long boardId){
+    public ResponseEntity<?> findBoard(@PathVariable("boardId") Long boardId)
+    {
 
         Board board = boardService.findBoard(boardId);
-        board.setComments(commentService.findComments(board.getBoardId()));
 
         return ResponseEntity.ok(board);
     }

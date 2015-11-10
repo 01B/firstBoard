@@ -36,9 +36,12 @@ import org.springframework.web.context.WebApplicationContext;
 @Transactional
 public class UserControllerTest {
 
-    @Autowired private WebApplicationContext webApplicationContext;
-    @Autowired private ObjectMapper objectMapper;
-    @Autowired private UserService userService;
+    @Autowired
+    private WebApplicationContext webApplicationContext;
+    @Autowired
+    private ObjectMapper objectMapper;
+    @Autowired
+    private UserService userService;
 
     private MockMvc mockMvc;
     private User baseUser;
@@ -59,14 +62,14 @@ public class UserControllerTest {
     public void testAddNewUser() throws Exception {
 
         // give
-        User user = new UserBuilder().createDefault();
-        user.setUsername("addUserUsername");
-        user.setNickName("addUserNickname");
+        User newUser = UserBuilder.createDefault();
+        newUser.setUsername("addUserUsername");
+        newUser.setNickName("addUserNickname");
 
         // when
         RequestBuilder requestBuilder = MockMvcRequestBuilders.post("/users")
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .content(objectMapper.writeValueAsString(user));
+                .content(objectMapper.writeValueAsString(newUser));
         ResultActions resultActions = mockMvc.perform(requestBuilder);
 
         // then
@@ -74,11 +77,11 @@ public class UserControllerTest {
                 .andExpect(MockMvcResultMatchers.status().isCreated())
                 .andExpect(MockMvcResultMatchers.handler().handlerType(UserController.class))
                 .andExpect(MockMvcResultMatchers.handler().methodName("addNewUser"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.username", org.hamcrest.Matchers.is(user.getUsername())))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.password", org.hamcrest.Matchers.is(user.getPassword())))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.firstName", org.hamcrest.Matchers.is(user.getFirstName())))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.lastName", org.hamcrest.Matchers.is(user.getLastName())))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.nickname", org.hamcrest.Matchers.is(user.getNickname())))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.username", org.hamcrest.Matchers.is(newUser.getUsername())))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.password", org.hamcrest.Matchers.is(newUser.getPassword())))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.firstName", org.hamcrest.Matchers.is(newUser.getFirstName())))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.lastName", org.hamcrest.Matchers.is(newUser.getLastName())))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.nickname", org.hamcrest.Matchers.is(newUser.getNickname())))
                 .andDo(MockMvcResultHandlers.print());
     }
 

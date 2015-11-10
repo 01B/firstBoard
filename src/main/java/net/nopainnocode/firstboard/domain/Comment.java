@@ -46,9 +46,11 @@ public class Comment implements Serializable{
 		return this;
 	}
 
-	public long getCommentId() {
+	public Long getCommentId() {
 		return commentId;
 	}
+
+	public void setCommentId(Long commentId) { this.commentId = commentId; }
 
 	public String getContent() {
 		return content;

@@ -4,6 +4,7 @@ import net.nopainnocode.firstboard.domain.Board;
 import net.nopainnocode.firstboard.domain.Comment;
 import net.nopainnocode.firstboard.domain.User;
 import net.nopainnocode.firstboard.repository.CommentRepository;
+import net.nopainnocode.firstboard.repository.UserRepository;
 import net.nopainnocode.firstboard.service.BoardService;
 import net.nopainnocode.firstboard.service.CommentService;
 import net.nopainnocode.firstboard.service.UserService;
@@ -23,17 +24,25 @@ import java.util.List;
 @Transactional
 public class CommentServiceImpl implements CommentService {
 
-    @Autowired private CommentRepository commentRepository;
-    @Autowired private UserService userService;
-    @Autowired private BoardService boardService;
+    @Autowired
+    private UserRepository userRepository;
+    @Autowired
+    private CommentRepository commentRepository;
+    @Autowired
+    private UserService userService;
+    @Autowired
+    private BoardService boardService;
 
     @Override
     public Comment addNewComment(Long boardId, Comment newComment) {
 
+        User user = userRepository.findOne(newComment.getUser().getUserId());
+        newComment.setUser(user);
+
         Board board = boardService.findBoard(boardId);
-        if(null == board)
+        if (null == board)
             throw new BoardNotFoundException(boardId);
-        else{
+        else {
             board.getComments().add(newComment);
         }
 
@@ -67,9 +76,9 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public boolean deleteComment(Long commentId) {
 
-        if(null == findCommentIfExist(commentId))
+        if (null == findCommentIfExist(commentId))
             return false;
-        else{
+        else {
             commentRepository.delete(commentId);
 
             return true;
@@ -81,7 +90,7 @@ public class CommentServiceImpl implements CommentService {
         Comment comment = commentRepository.findOne(commentId);
 
         // if comment does not exist
-        if(null == comment)
+        if (null == comment)
             throw new CommentNotFoundException(commentId);
 
         return comment;

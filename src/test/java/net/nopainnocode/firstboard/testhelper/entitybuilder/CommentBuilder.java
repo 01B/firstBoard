@@ -28,11 +28,11 @@ public class CommentBuilder implements Builder<Comment>{
         return this;
     }
 
-    public static Comment createDefault(){
+    public static Comment createDefault(User user){
 
         return new CommentBuilder()
                 .setContent("defaultContent")
-                .setUser(UserBuilder.createDefault())
+                .setUser(user)
                 .build();
     }
 }

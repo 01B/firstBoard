@@ -28,7 +28,7 @@ public class CommentController {
      * @param bindingResult 댓글 객체 유효성 검증 결
      * @return
      */
-    @RequestMapping(value = "/{boardId}/comments", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/{boardId}", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> addNewComment(@PathVariable("boardId") Long boardId,
                                            @RequestBody @Valid Comment enteredComment,
                                            BindingResult bindingResult) {

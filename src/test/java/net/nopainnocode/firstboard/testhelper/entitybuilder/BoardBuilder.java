@@ -55,18 +55,14 @@ public class BoardBuilder implements Builder<Board>{
         return this;
     }
 
-    public static Board createDefault(int commentCount){
-
-        List<Comment> defaultComments = new ArrayList<>();
-        for(int i = 0; i < commentCount ; i++)
-            defaultComments.add(CommentBuilder.createDefault());
+    public static Board createDefault(User user){
 
         return new BoardBuilder()
                 .setTitle("defaultTitle")
                 .setContent("defaultContent")
-                .setReadCount(100)
-                .setUser(UserBuilder.createDefault())
-                .setComments(defaultComments)
+                //.setReadCount(100)
+                .setUser(user)
+                //.setComments(defaultComments)
                 .build();
     }
 }
