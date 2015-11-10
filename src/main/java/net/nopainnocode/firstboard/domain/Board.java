@@ -1,25 +1,21 @@
 package net.nopainnocode.firstboard.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.util.StringUtils;
+
+import java.beans.Transient;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Lob;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 
 @Entity(name = "board")
 public class Board implements Serializable{
 
 	@Id @GeneratedValue
-	private long boardId;
+	private Long boardId;
 	
 	@Column(nullable = false, length = 50)
 	private String title;
@@ -29,15 +25,15 @@ public class Board implements Serializable{
 	private String content;
 	
 	private int readCount;
-	
-	@Column(nullable = false)
-	private Date createDate;
+
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date createDate = new Date();
 	
 	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, optional = false)
 	private User user;
-	
+
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private List<Comment> comments;
+	private List<Comment> comments = new ArrayList<>();
 
 	public Board(String title, String content, User user) {
 
@@ -45,17 +41,18 @@ public class Board implements Serializable{
 
 		setTitle(title);
 		setContent(content);
-		setReadCount(0);
-		this.createDate = new Date();
 		this.user = user;
-		setComments(new ArrayList<Comment>());
 	}
 
-	public long getBoardId() {
+	public Board(){
+
+	}
+
+	public Long getBoardId() {
 		return boardId;
 	}
 
-	public void setBoardId(long boardId) {
+	public void setBoardId(Long boardId) {
 		this.boardId = boardId;
 	}
 
@@ -87,9 +84,13 @@ public class Board implements Serializable{
 		return createDate;
 	}
 
+	public void setCreateDate(Date date) { this.createDate = date; }
+
 	public User getUser() {
 		return user;
 	}
+
+	public void setUser(User user) { this.user = user; }
 
 	public List<Comment> getComments() {
 		return comments;
@@ -99,12 +100,26 @@ public class Board implements Serializable{
 		this.comments = comments;
 	}
 
+	@Transient
 	public Board updateBoard(Board board){
 
-		this.setTitle(board.getTitle());
-		this.setContent(board.getContent());
+		if(isBoardEmpty(board)){
+
+			this.setBoardId(board.getBoardId());
+			this.setTitle(board.getTitle());
+			this.setContent(board.getContent());
+		}
 
 		return this;
+	}
+
+	private boolean isBoardEmpty(Board enteredBoard) {
+
+		if(StringUtils.isEmpty(enteredBoard.getTitle())
+				||StringUtils.isEmpty(enteredBoard.getContent()))
+			throw new IllegalArgumentException("argument id null");
+
+		return true;
 	}
 	
 }
