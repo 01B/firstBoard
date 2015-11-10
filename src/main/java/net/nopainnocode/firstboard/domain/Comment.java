@@ -24,7 +24,7 @@ public class Comment implements Serializable{
 	private String content;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date createDate;
+	private Date createDate = new Date();
 
 	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, optional = false)
 	private User user;
@@ -32,8 +32,11 @@ public class Comment implements Serializable{
 	public Comment(String content, User user) {
 
 		setContent(content);
-		this.createDate = new Date();
 		setUser(user);
+	}
+
+	public Comment(){
+
 	}
 
 	public Comment update(Comment enteredComment) {
