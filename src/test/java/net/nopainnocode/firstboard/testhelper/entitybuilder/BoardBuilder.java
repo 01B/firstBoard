@@ -60,9 +60,7 @@ public class BoardBuilder implements Builder<Board>{
         return new BoardBuilder()
                 .setTitle("defaultTitle")
                 .setContent("defaultContent")
-                //.setReadCount(100)
                 .setUser(user)
-                //.setComments(defaultComments)
                 .build();
     }
 }
