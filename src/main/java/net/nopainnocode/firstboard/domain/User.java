@@ -1,5 +1,6 @@
 package net.nopainnocode.firstboard.domain;
 
+import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.util.StringUtils;
 
 import javax.persistence.*;
@@ -15,18 +16,23 @@ public class User implements Serializable
 	private Long userId;
 
 	@Column(unique = true, nullable = false)
+	@NotEmpty
 	private String username;
 	
 	@Column(nullable = false)
+	@NotEmpty
 	private String password;
 	
 	@Column(nullable = false)
+	@NotEmpty
 	private String firstName;
 	
 	@Column(nullable = false)
+	@NotEmpty
 	private String lastName;
 	
 	@Column(unique = true, nullable = false)
+	@NotEmpty
 	private String nickname;
 	
 	@Temporal(TemporalType.TIMESTAMP)

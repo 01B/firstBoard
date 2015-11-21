@@ -3,6 +3,7 @@ package net.nopainnocode.firstboard.domain;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.util.StringUtils;
 
 import java.beans.Transient;
@@ -20,10 +21,12 @@ public class Board implements Serializable{
 	private Long boardId;
 	
 	@Column(nullable = false, length = 50)
+	@NotEmpty
 	private String title;
 	
 	@Lob
 	@Column(nullable = false)
+	@NotEmpty
 	private String content;
 	
 	private int readCount;

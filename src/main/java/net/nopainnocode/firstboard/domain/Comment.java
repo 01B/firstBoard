@@ -1,5 +1,7 @@
 package net.nopainnocode.firstboard.domain;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -21,6 +23,7 @@ public class Comment implements Serializable{
 	private Long commentId;
 
 	@Column(nullable = false, length = 100)
+	@NotEmpty
 	private String content;
 
 	@Temporal(TemporalType.TIMESTAMP)
