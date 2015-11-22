@@ -67,6 +67,7 @@ public class Board implements Serializable{
 		return this;
 	}
 
+	@Transient
 	public void readBoard(){
 
 		this.readCount++;
