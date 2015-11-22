@@ -54,6 +54,33 @@ public class Board implements Serializable{
 
 	}
 
+	@Transient
+	public Board updateBoard(Board board){
+
+		if(isBoardEmpty(board)){
+
+			this.setBoardId(board.getBoardId());
+			this.setTitle(board.getTitle());
+			this.setContent(board.getContent());
+		}
+
+		return this;
+	}
+
+	public void readBoard(){
+
+		this.readCount++;
+	}
+
+	private boolean isBoardEmpty(Board enteredBoard) {
+
+		if(StringUtils.isEmpty(enteredBoard.getTitle())
+				||StringUtils.isEmpty(enteredBoard.getContent()))
+			throw new IllegalArgumentException("argument id null");
+
+		return true;
+	}
+
 	public Long getBoardId() {
 		return boardId;
 	}
@@ -104,28 +131,6 @@ public class Board implements Serializable{
 
 	public void setComments(List<Comment> comments) {
 		this.comments = comments;
-	}
-
-	@Transient
-	public Board updateBoard(Board board){
-
-		if(isBoardEmpty(board)){
-
-			this.setBoardId(board.getBoardId());
-			this.setTitle(board.getTitle());
-			this.setContent(board.getContent());
-		}
-
-		return this;
-	}
-
-	private boolean isBoardEmpty(Board enteredBoard) {
-
-		if(StringUtils.isEmpty(enteredBoard.getTitle())
-				||StringUtils.isEmpty(enteredBoard.getContent()))
-			throw new IllegalArgumentException("argument id null");
-
-		return true;
 	}
 	
 }

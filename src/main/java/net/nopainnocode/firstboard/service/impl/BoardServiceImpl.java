@@ -33,7 +33,10 @@ public class BoardServiceImpl implements BoardService {
     @Override
     public Board findBoard(Long boardId) {
 
-        return findBoardIfExist(boardId);
+        Board board = findBoardIfExist(boardId);
+        board.readBoard();
+
+        return board;
     }
 
 
