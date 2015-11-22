@@ -1,5 +1,6 @@
 package net.nopainnocode.firstboard.service.impl;
 
+import net.nopainnocode.firstboard.support.error.InvalidPasswordException;
 import net.nopainnocode.firstboard.support.error.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -64,6 +65,17 @@ public class UserServiceImpl implements UserService {
 
 			return true;
 		}
+	}
+
+	@Override
+	public User login(String username, String password){
+
+		User user = findUser(username);
+
+		if (user.getPassword().equals(password))
+			return user;
+		else
+			throw new InvalidPasswordException();
 	}
 
 	private void userValidationCheck(User user) {
