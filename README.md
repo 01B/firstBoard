@@ -8,5 +8,6 @@
 * 다음의 기술을 사용합니다.
   - Spring boot
   - JPA
+  - Gradle
   - H2
   - Web
